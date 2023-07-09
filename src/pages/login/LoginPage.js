@@ -15,6 +15,8 @@ const LoginPage = () => {
     const localizacao = useLocation();
     const pathFornecidoUsuario = localizacao.state || { from: { pathname: "/home" } };
 
+    console.log("LOGN");
+
     useEffect(() => {
       if (!hasAuthParams() && !autorizacao.isAuthenticated && !autorizacao.activeNavigator && !autorizacao.isLoading) {
           autorizacao.signinRedirect();
@@ -23,6 +25,10 @@ const LoginPage = () => {
 
     if (autorizacao.activeNavigator || !autorizacao.isAuthenticated) {
         return (<Spinner isSVG diameter="80px" aria-label="loading-tela-login" />);
+    }
+
+    if (autorizacao.isLoading) {
+        return "LOAD";
     }
 
     return (<Navigate to={pathFornecidoUsuario.from.pathname} />);

@@ -27,9 +27,16 @@ const oidcConfig = {
     client_id: "react",
     redirect_uri: "http://192.168.5.125:3000/home",
     metadata: {
+        check_session_iframe: "http://192.168.5.125:8080/auth/realms/quarkus/protocol/openid-connect/login-status-iframe.html",
+        jwks_uri: "http://192.168.5.125:8080/auth/realms/quarkus/protocol/openid-connect/certs",
+        issuer: "http://192.168.5.125:8080/auth/realms/quarkus",
+        token_introspection_endpoint: "http://192.168.5.125:8080/auth/realms/quarkus/protocol/openid-connect/token/introspect",
+        userinfo_endpoint: "http://192.168.5.125:8080/auth/realms/quarkus/protocol/openid-connect/userinfo",
         authorization_endpoint: "http://192.168.5.125:8080/auth/realms/quarkus/protocol/openid-connect/auth",
         token_endpoint: "http://192.168.5.125:8080/auth/realms/quarkus/protocol/openid-connect/token",
-        end_session_endpoint: "http://192.168.5.125:8080/auth/realms/quarkus/protocol/openid-connect/logout"
+        end_session_endpoint: "http://192.168.5.125:8080/auth/realms/quarkus/protocol/openid-connect/logout",
+        egistration_endpoint: "http://192.168.5.125:8080/auth/realms/quarkus/clients-registrations/openid-connect",
+        introspection_endpoint: "http://192.168.5.125:8080/auth/realms/quarkus/protocol/openid-connect/token/introspect"
     }
 };
 
