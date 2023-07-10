@@ -9,7 +9,8 @@ export default {
     "pt-BR": {
         bemVindo: "Bem Vindo",
         usuario: "Usuário",
-        deslogar: "Deslogar"
+        deslogar: "Deslogar",
+        renovar: "Renovar"
     }
 
 };

@@ -1,34 +1,38 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { Navigate } from 'react-router-dom';
-import { useAuth, hasAuthParams } from "react-oidc-context";
-import { Spinner } from '@patternfly/react-core';
+import { hasAuthParams } from "react-oidc-context";
 
 /**
  * Página responsável por redirecionar o usuário à tela de login do keycloak.
  *
+ * @param autorizacao
+ *          Objeto que representa a autorização do usuário.
+ *
  * @author andersonvieira
  */
-const LoginPage = () => {
+const LoginPage = ({ autorizacao }) => {
 
-    const autorizacao = useAuth();
     const localizacao = useLocation();
     const pathFornecidoUsuario = localizacao.state || { from: { pathname: "/home" } };
 
-    console.log("LOGN");
-
-    useEffect(() => {
-      if (!hasAuthParams() && !autorizacao.isAuthenticated && !autorizacao.activeNavigator && !autorizacao.isLoading) {
-          autorizacao.signinRedirect();
-      }
-    }, [autorizacao.isAuthenticated, autorizacao.activeNavigator, autorizacao.isLoading, autorizacao.signinRedirect]);
+    useEffect(
+        () => {
+            if (!hasAuthParams() && !autorizacao.isAuthenticated
+                    && !autorizacao.activeNavigator && !autorizacao.isLoading) {
+                autorizacao.signinRedirect();
+            }
+        },
+        [
+            autorizacao.isAuthenticated,
+            autorizacao.activeNavigator,
+            autorizacao.isLoading,
+            autorizacao.signinRedirect
+        ]
+    );
 
     if (autorizacao.activeNavigator || !autorizacao.isAuthenticated) {
-        return (<Spinner isSVG diameter="80px" aria-label="loading-tela-login" />);
-    }
-
-    if (autorizacao.isLoading) {
-        return "LOAD";
+        return (<></>);
     }
 
     return (<Navigate to={pathFornecidoUsuario.from.pathname} />);

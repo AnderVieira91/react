@@ -1,31 +1,33 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
-import { Spinner } from '@patternfly/react-core';
+
+import { usuarioNaoPossuiRolePermitida } from '../utils/autorizacaoUtils';
 
 /**
  * Rota que exige um usuário autenticado para ser exibida.
  *
+ * @param rolePermitida
+ *          A role permitida para acessar a rota.
+ * @param autorizacao
+ *          Objeto que representa a autorização do usuário.
+ * @param children
+ *          O componente que representa a página a ser acessada
+ *          pela rota.
+ *
  * @author andersonvieira
  */
-const RotaPrivada = ({ rolePermitida, rolesUsuario, autorizacao, children, ...props }) => {
+const RotaPrivada = ({ rolePermitida, autorizacao, children }) => {
 
-    const rolePermitidaEstaPreenchida = () => {
-        return rolePermitida !== undefined && rolePermitida !== null && rolePermitida.trim().length > 0;
-    }
-
-    if (autorizacao.activeNavigator === "signinSilent" || autorizacao.activeNavigator === "signoutRedirect"
-            || autorizacao.isLoading) {
-        return (<Spinner isSVG diameter="80px" aria-label="loading-rota-privada" />);
+    if (!autorizacao.activeNavigator && autorizacao.isLoading) {
+        return "LOADING PAGE à criar";
     }
 
     if (!autorizacao.isAuthenticated) {
         return (<Navigate to={"/login"} />);
     }
 
-    if (rolePermitidaEstaPreenchida() &&
-            (rolesUsuario === undefined || rolesUsuario === null || !rolesUsuario.includes(rolePermitida))) {
+    if (usuarioNaoPossuiRolePermitida(rolePermitida, autorizacao)) {
         return "Não Autorizado";
-
     }
 
     return children;

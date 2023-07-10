@@ -51,7 +51,9 @@ const oidcConfig = {
         token_endpoint: "http://192.168.5.125:8080/auth/realms/quarkus/protocol/openid-connect/token",
         end_session_endpoint: "http://192.168.5.125:8080/auth/realms/quarkus/protocol/openid-connect/logout",
         egistration_endpoint: "http://192.168.5.125:8080/auth/realms/quarkus/clients-registrations/openid-connect",
-        introspection_endpoint: "http://192.168.5.125:8080/auth/realms/quarkus/protocol/openid-connect/token/introspect"
+        introspection_endpoint: "http://192.168.5.125:8080/auth/realms/quarkus/protocol/openid-connect/token/introspect",
+        revocation_endpoint: "http://192.168.5.125:8080/auth/realms/quarkus/protocol/openid-connect/revoke",
+        revokeTokenTypes: ["access_token", "refresh_token"]
     },
     onSigninCallback: onSigninCallback
 };
