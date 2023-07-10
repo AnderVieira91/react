@@ -1,6 +1,5 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
-import { useAuth } from "react-oidc-context";
 import { Spinner } from '@patternfly/react-core';
 
 /**
@@ -8,9 +7,11 @@ import { Spinner } from '@patternfly/react-core';
  *
  * @author andersonvieira
  */
-const RotaPrivada = ({ children }) => {
+const RotaPrivada = ({ rolePermitida, rolesUsuario, autorizacao, children, ...props }) => {
 
-    const autorizacao = useAuth();
+    const rolePermitidaEstaPreenchida = () => {
+        return rolePermitida !== undefined && rolePermitida !== null && rolePermitida.trim().length > 0;
+    }
 
     if (autorizacao.activeNavigator === "signinSilent" || autorizacao.activeNavigator === "signoutRedirect"
             || autorizacao.isLoading) {
@@ -19,6 +20,12 @@ const RotaPrivada = ({ children }) => {
 
     if (!autorizacao.isAuthenticated) {
         return (<Navigate to={"/login"} />);
+    }
+
+    if (rolePermitidaEstaPreenchida() &&
+            (rolesUsuario === undefined || rolesUsuario === null || !rolesUsuario.includes(rolePermitida))) {
+        return "Não Autorizado";
+
     }
 
     return children;

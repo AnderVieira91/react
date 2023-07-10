@@ -10,7 +10,7 @@ const HomePage = ({ logoutUrl, mensagens, ...props }) => {
         auth.signoutRedirect({ post_logout_redirect_uri: "/login" });
     };
 
-    return(<Button onClick={deslogar}>{mensagens.deslogar}</Button>)
+    return(<div><Button variant="primary" onClick={deslogar}>{mensagens.deslogar}</Button></div>)
 }
 
 export default HomePage;
