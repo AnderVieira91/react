@@ -29,17 +29,37 @@ export const obterRolesUsuario = (autorizacao) => {
  *          A role permitida a ser verificada.
  * @param autorizacao
  *          Objeto que representa os dados de autorização do usuário.
+ * @param rolesUsuario
+ *          As roles do usuário.
  *
  * @return
  *          Se o usuário não possui a role em questão.
  */
-export const usuarioNaoPossuiRolePermitida = (rolePermitida, autorizacao) => {
+export const usuarioNaoPossuiRolePermitida = ({ rolePermitida, autorizacao, rolesUsuario }) => {
     if (isStringVazia(rolePermitida)) {
         return false;
     }
 
-    const rolesUsuario = obterRolesUsuario(autorizacao);
-    return rolesUsuario === undefined || rolesUsuario === null || !rolesUsuario.includes(rolePermitida);
+    const rolesExistentes = rolesUsuario !== null && rolesUsuario !== undefined ?
+            rolesUsuario
+            : obterRolesUsuario(autorizacao);
+
+    return rolesExistentes === undefined || rolesExistentes === null || !rolesExistentes.includes(rolePermitida);
+}
+
+/**
+ * Verifica se o usuário possui uma role.
+ *
+ * @param rolePermitida
+ *          A role permitida a ser verificada.
+ * @param rolesUsuario
+ *          As roles do usuário.
+ *
+ * @return
+ *          Se o usuário possui a role em questão.
+ */
+export const usuarioPossuiRolePermitida = ({ rolePermitida, rolesUsuario }) => {
+    return !usuarioNaoPossuiRolePermitida({ rolePermitida: rolePermitida, rolesUsuario: rolesUsuario })
 }
 
 /**

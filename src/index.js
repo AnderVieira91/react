@@ -7,8 +7,6 @@ import MainApp from "./pages/MainApp";
 
 import mensagensIntl from "./mensagens/mensagensIntl";
 
-import "@patternfly/react-core/dist/styles/base.css";
-
 /**
  * Arquivo responsável por "inicializar" o aplicativo.
  *
@@ -37,33 +35,31 @@ const onSigninCallback = () => {
  * Atualmente é o Keycloak.
  */
 const oidcConfig = {
-    authority: "http://192.168.5.125:8080/auth/quarkus",
-    client_id: "react",
-    redirect_uri: "http://192.168.5.125:3000/home",
-    scope: "openid email profile roles",
+    authority: `${process.env.REACT_APP_KEYCLOAK_BASE_URL}/${process.env.REACT_APP_KEYCLOAK_REALM}`,
+    client_id: process.env.REACT_APP_KEYCLOAK_CLIENT_ID,
+    redirect_uri: `${process.env.REACT_APP_FRONTEND_BASE_URL}/home`,
+    scope: "openid email profile",
     metadata: {
-        check_session_iframe: "http://192.168.5.125:8080/auth/realms/quarkus/protocol/openid-connect/login-status-iframe.html",
-        jwks_uri: "http://192.168.5.125:8080/auth/realms/quarkus/protocol/openid-connect/certs",
-        issuer: "http://192.168.5.125:8080/auth/realms/quarkus",
-        token_introspection_endpoint: "http://192.168.5.125:8080/auth/realms/quarkus/protocol/openid-connect/token/introspect",
-        userinfo_endpoint: "http://192.168.5.125:8080/auth/realms/quarkus/protocol/openid-connect/userinfo",
-        authorization_endpoint: "http://192.168.5.125:8080/auth/realms/quarkus/protocol/openid-connect/auth",
-        token_endpoint: "http://192.168.5.125:8080/auth/realms/quarkus/protocol/openid-connect/token",
-        end_session_endpoint: "http://192.168.5.125:8080/auth/realms/quarkus/protocol/openid-connect/logout",
-        egistration_endpoint: "http://192.168.5.125:8080/auth/realms/quarkus/clients-registrations/openid-connect",
-        introspection_endpoint: "http://192.168.5.125:8080/auth/realms/quarkus/protocol/openid-connect/token/introspect",
-        revocation_endpoint: "http://192.168.5.125:8080/auth/realms/quarkus/protocol/openid-connect/revoke",
+        check_session_iframe: `${process.env.REACT_APP_KEYCLOAK_BASE_URL}/realms/${process.env.REACT_APP_KEYCLOAK_REALM}/protocol/openid-connect/login-status-iframe.html`,
+        jwks_uri: `${process.env.REACT_APP_KEYCLOAK_BASE_URL}/realms/${process.env.REACT_APP_KEYCLOAK_REALM}/protocol/openid-connect/certs`,
+        issuer: `${process.env.REACT_APP_KEYCLOAK_BASE_URL}/realms/${process.env.REACT_APP_KEYCLOAK_REALM}`,
+        token_introspection_endpoint: `${process.env.REACT_APP_KEYCLOAK_BASE_URL}/realms/${process.env.REACT_APP_KEYCLOAK_REALM}/protocol/openid-connect/token/introspect`,
+        userinfo_endpoint: `${process.env.REACT_APP_KEYCLOAK_BASE_URL}/realms/${process.env.REACT_APP_KEYCLOAK_REALM}/protocol/openid-connect/userinfo`,
+        authorization_endpoint: `${process.env.REACT_APP_KEYCLOAK_BASE_URL}/realms/${process.env.REACT_APP_KEYCLOAK_REALM}/protocol/openid-connect/auth`,
+        token_endpoint: `${process.env.REACT_APP_KEYCLOAK_BASE_URL}/realms/${process.env.REACT_APP_KEYCLOAK_REALM}/protocol/openid-connect/token`,
+        end_session_endpoint: `${process.env.REACT_APP_KEYCLOAK_BASE_URL}/realms/${process.env.REACT_APP_KEYCLOAK_REALM}/protocol/openid-connect/logout`,
+        egistration_endpoint: `${process.env.REACT_APP_KEYCLOAK_BASE_URL}/realms/${process.env.REACT_APP_KEYCLOAK_REALM}/clients-registrations/openid-connect`,
+        introspection_endpoint: `${process.env.REACT_APP_KEYCLOAK_BASE_URL}/realms/${process.env.REACT_APP_KEYCLOAK_REALM}/protocol/openid-connect/token/introspect`,
+        revocation_endpoint: `${process.env.REACT_APP_KEYCLOAK_BASE_URL}/realms/${process.env.REACT_APP_KEYCLOAK_REALM}/protocol/openid-connect/revoke`,
         revokeTokenTypes: ["access_token", "refresh_token"]
     },
     onSigninCallback: onSigninCallback
 };
 
 root.render(
-    <React.StrictMode>
-        <IntlProvider locale={idioma} defaultLocale="pt-Br" messages={messages}>
-                <AuthProvider {...oidcConfig} >
-                    <MainApp/>
-                </AuthProvider>
-        </IntlProvider>
-    </React.StrictMode>
+    <IntlProvider locale={idioma} defaultLocale="pt-Br" messages={messages}>
+        <AuthProvider {...oidcConfig} >
+            <MainApp/>
+        </AuthProvider>
+    </IntlProvider>
 );

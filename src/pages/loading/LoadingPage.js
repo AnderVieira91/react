@@ -2,8 +2,10 @@ import React from "react";
 
 import Pagina from "../componentes/pagina/Pagina";
 
+import Loading from "./Loading";
+
 /**
- * Componente que representa a página inicial do sistema.
+ * Componente que representa uma página de loading.
  *
  * @param autorizacao
  *          Objeto que representa a autorização do usuário.
@@ -11,15 +13,13 @@ import Pagina from "../componentes/pagina/Pagina";
  *          Objeto que possui as mensagens internacionalizadas
  *          do sistema.
  */
-const HomePage = ({ autorizacao, mensagens }) => {
+const LoadingPage = ({ autorizacao, mensagens }) => {
 
     return(
-        <Pagina autorizacao={autorizacao} nomePagina={mensagens.telaHome} mensagens={mensagens}>
-            <div>
-                Home
-            </div>
+        <Pagina autorizacao={autorizacao} nomePagina={mensagens.telaLoading} mensagens={mensagens}>
+            <Loading/>
         </Pagina>
     );
 }
 
-export default HomePage;
+export default LoadingPage;

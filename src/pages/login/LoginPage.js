@@ -2,6 +2,8 @@ import { useEffect } from "react";
 import { useLocation, Navigate } from "react-router-dom";
 import { hasAuthParams } from "react-oidc-context";
 
+import Loading from "../loading/Loading";
+
 /**
  * Página responsável por redirecionar o usuário à tela de login do keycloak.
  *
@@ -31,7 +33,7 @@ const LoginPage = ({ autorizacao }) => {
     );
 
     if (autorizacao.activeNavigator || !autorizacao.isAuthenticated) {
-        return (<></>);
+        return (<Loading/>);
     }
 
     return (<Navigate to={pathFornecidoUsuario.from.pathname} />);

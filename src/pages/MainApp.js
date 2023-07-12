@@ -4,6 +4,8 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import HomePage from "./home/HomePage";
 import LoginPage from "./login/LoginPage";
+import LoadingPage from "./loading/LoadingPage";
+import NaoAutorizadoPage from "./naoAutorizado/NaoAutorizadoPage";
 import RotaPrivada from "./RotaPrivada";
 
 /**
@@ -24,8 +26,18 @@ const MainApp = (props) => {
 					<Route path="/" element={<Navigate to="/home" />} />
 					<Route path="/login" element={<LoginPage autorizacao={autorizacao} />} />
 					<Route path="/home" element={
-						<RotaPrivada autorizacao={autorizacao} rolePermitida={"admin"} >
+						<RotaPrivada autorizacao={autorizacao} mensagens={messages} rolePermitida={"admin"} >
 							<HomePage mensagens={messages} autorizacao={autorizacao} />
+						</RotaPrivada>
+					} />
+					<Route path="/loading" element={
+						<RotaPrivada autorizacao={autorizacao} mensagens={messages} >
+							<LoadingPage mensagens={messages} autorizacao={autorizacao} />
+						</RotaPrivada>
+					} />
+					<Route path="/nao-autorizado" element={
+						<RotaPrivada autorizacao={autorizacao} mensagens={messages} >
+							<NaoAutorizadoPage mensagens={messages} autorizacao={autorizacao} />
 						</RotaPrivada>
 					} />
 				</Routes>

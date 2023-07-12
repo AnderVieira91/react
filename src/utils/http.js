@@ -6,4 +6,12 @@
 
 export const get = async (autorizacao, url, headers) => {
     await autorizacao.signinSilent();
+    const token = autorizacao.user?.access_token;
+
+    return fetch(url, {
+        headers: {
+            ...headers,
+            Authorization: `Bearer ${token}`,
+        }
+    })
 }
