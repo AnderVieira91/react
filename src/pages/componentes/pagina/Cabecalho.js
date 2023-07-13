@@ -1,16 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
+import { useAuth } from "react-oidc-context";
 import { PageHeader, PageHeaderTools, Button, Icon, FlexItem, Flex, Divider, Label } from "@patternfly/react-core";
 import { UserIcon } from "@patternfly/react-icons";
+
+import { MensagemContext } from "../../contexts/MensagemContext";
 /**
  * Componente de cabeçalho da página padrão do sistema.
  *
  * @param nomePagina
  *          O nome da página.
- * @param autorizacao
- *          Objeto que representa a autorização do usuário.
- * @param mensagens
- *          Objeto que possui as mensagens internacionalizadas
- *          do sistema.
  * @param navegadorEstaAberto
  *          Flag que indica se o navegador está aberto.
  * @param onToggleNavegador
@@ -18,7 +16,11 @@ import { UserIcon } from "@patternfly/react-icons";
  *
  * @author andersonvieira
  */
-const Cabecalho = ({ nomePagina, autorizacao, mensagens, navegadorEstaAberto, onToggleNavegador }) => {
+const Cabecalho = ({ nomePagina, navegadorEstaAberto, onToggleNavegador }) => {
+
+    const { mensagens } = useContext(MensagemContext);
+
+    const autorizacao = useAuth();
 
     const headerTools = (
         <PageHeaderTools>

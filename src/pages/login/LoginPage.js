@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { useAuth } from "react-oidc-context";
 import { useLocation, Navigate } from "react-router-dom";
 import { hasAuthParams } from "react-oidc-context";
 
@@ -7,15 +8,13 @@ import Loading from "../loading/Loading";
 /**
  * Página responsável por redirecionar o usuário à tela de login do keycloak.
  *
- * @param autorizacao
- *          Objeto que representa a autorização do usuário.
- *
  * @author andersonvieira
  */
-const LoginPage = ({ autorizacao }) => {
+const LoginPage = () => {
 
+    const autorizacao = useAuth();
     const localizacao = useLocation();
-    const pathFornecidoUsuario = localizacao.state || { from: { pathname: "/home" } };
+    const pathFornecidoUsuario = localizacao.state || { from: { pathname: "/" } };
 
     useEffect(
         () => {

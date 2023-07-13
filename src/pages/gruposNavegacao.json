@@ -1,0 +1,30 @@
+{
+    "grupos" : [
+        {
+            "nome" : "inicio",
+            "rotas" : [
+                {
+                    "path" : "/",
+                    "label" : "telaHome",
+                    "role" : "admin",
+                    "componente": "HomePage"
+                },
+                {
+                    "path" : "/loading",
+                    "label" : "telaLoading",
+                    "componente": "LoadingPage"
+                }
+            ]
+        },
+        {
+            "nome" : "naoAutorizado",
+            "rotas" : [
+                {
+                    "path" : "/nao-autorizado",
+                    "label" : "telaNaoAutorizado",
+                    "componente": "NaoAutorizadoPage"
+                }
+            ]
+        }
+    ]
+}

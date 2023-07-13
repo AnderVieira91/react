@@ -7,6 +7,9 @@
 export default {
 
     "pt-BR": {
+        itensPorPagina: "Itens por página",
+        de: "de",
+        itens: "itens",
         inicio: "Início",
         telaHome: "Tela Principal",
         bemVindo: "Bem Vindo",
@@ -18,7 +21,8 @@ export default {
         telaLoading: "Tela Loading",
         telaNaoAutorizado: "Tela Não Autorizado",
         naoAutorizado: "Não Autorizado",
-        textoNaoAutorizado: "O Sr.(a) não possui acesso à esse serviço, verifique com a administração."
+        textoNaoAutorizado: "O Sr.(a) não possui acesso à esse serviço, verifique com a administração.",
+        tabelaVazia: "Nenhum resultado encontrado"
     }
 
 };

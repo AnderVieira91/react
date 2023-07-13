@@ -1,23 +1,21 @@
-import React from "react";
-import { Title, EmptyState, EmptyStateIcon, EmptyStateBody, EmptyStateVariant } from "@patternfly/react-core";
+import React, { useContext } from "react";
+import { Title, EmptyState, EmptyStateIcon, EmptyStateBody, EmptyStateVariant, Text } from "@patternfly/react-core";
 import CubesIcon from "@patternfly/react-icons/dist/esm/icons/cubes-icon";
 
+import { MensagemContext } from "../contexts/MensagemContext";
 import Pagina from "../componentes/pagina/Pagina";
 
 /**
  * Componente que representa uma página de loading.
  *
- * @param autorizacao
- *          Objeto que representa a autorização do usuário.
- * @param mensagens
- *          Objeto que possui as mensagens internacionalizadas
- *          do sistema.
  */
-const NaoAutorizadoPage = ({ autorizacao, mensagens }) => {
+const NaoAutorizadoPage = () => {
+
+    const { mensagens } = useContext(MensagemContext);
 
     return(
-        <Pagina autorizacao={autorizacao} nomePagina={mensagens.telaNaoAutorizado} mensagens={mensagens}>
-            <div className="centralizado-pagina-padrao">
+        <Pagina nomePagina={mensagens.telaNaoAutorizado} mensagens={mensagens}>
+            <div className="centralizado">
                 <EmptyState variant={EmptyStateVariant.xl}>
                     <EmptyStateIcon icon={CubesIcon} />
                         <Title headingLevel="h5" size="4xl">
@@ -25,7 +23,9 @@ const NaoAutorizadoPage = ({ autorizacao, mensagens }) => {
                         </Title>
 
                         <EmptyStateBody>
-                            {mensagens.textoNaoAutorizado}
+                            <Text>
+                                {mensagens.textoNaoAutorizado}
+                            </Text>
                         </EmptyStateBody>
                 </EmptyState>
             </div>

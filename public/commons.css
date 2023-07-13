@@ -3,12 +3,9 @@
     justify-content: center;
     align-items: center;
     text-align: center;
-    min-height: 100vh;
+    min-height: 80vh;
 }
 
-.centralizado-pagina-padrao {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
+.tela-cheia {
+    height: 100%;
 }

@@ -37,7 +37,7 @@ const onSigninCallback = () => {
 const oidcConfig = {
     authority: `${process.env.REACT_APP_KEYCLOAK_BASE_URL}/${process.env.REACT_APP_KEYCLOAK_REALM}`,
     client_id: process.env.REACT_APP_KEYCLOAK_CLIENT_ID,
-    redirect_uri: `${process.env.REACT_APP_FRONTEND_BASE_URL}/home`,
+    redirect_uri: `${process.env.REACT_APP_FRONTEND_BASE_URL}`,
     scope: "openid email profile",
     metadata: {
         check_session_iframe: `${process.env.REACT_APP_KEYCLOAK_BASE_URL}/realms/${process.env.REACT_APP_KEYCLOAK_REALM}/protocol/openid-connect/login-status-iframe.html`,

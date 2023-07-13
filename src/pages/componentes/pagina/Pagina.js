@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useAuth } from "react-oidc-context";
 import { Page, PageSection, PageSectionVariants } from "@patternfly/react-core";
 
 import Cabecalho from "./Cabecalho";
@@ -10,44 +11,34 @@ import BarraNavegacao from "./BarraNavegacao";
  *
  * @param nomePagina
  *          O nome da página.
- * @param autorizacao
- *          Objeto que representa a autorização do usuário.
- * @param mensagens
- *          Objeto que possui as mensagens internacionalizadas
- *          do sistema.
  * @param children
  *          Componentes filhos passados dentro do componente Pagina.
  *
  * @author andersonvieira
  */
-const Pagina = ({ autorizacao, nomePagina, mensagens, children }) => {
+const Pagina = ({ nomePagina, children }) => {
 
     const [navegadorEstaAberto, setNavegadorEstaAberto] = useState(false);
-    
-    useEffect(() => {autorizacao.signinSilent()}, []);
+
+    const autorizacao = useAuth();
+
+    useEffect(() => { autorizacao.signinSilent() }, []);
 
     const toggleNavegador = () => {
         setNavegadorEstaAberto(!navegadorEstaAberto);
     };
 
+    const barraNavegacao = (<BarraNavegacao navegadorEstaAberto={navegadorEstaAberto}/>);
+    const cabecalho = (
+        <Cabecalho
+                nomePagina={nomePagina}
+                navegadorEstaAberto={navegadorEstaAberto}
+                onToggleNavegador={toggleNavegador} />
+    );
+
     return(
-        <Page
-                header={
-                    <Cabecalho
-                            nomePagina={nomePagina}
-                            autorizacao={autorizacao}
-                            mensagens={mensagens}
-                            navegadorEstaAberto={navegadorEstaAberto}
-                            onToggleNavegador={toggleNavegador} />
-                }
-                sidebar={
-                    <BarraNavegacao
-                            paginaAtual={nomePagina}
-                            autorizacao={autorizacao}
-                            mensagens={mensagens}
-                            navegadorEstaAberto={navegadorEstaAberto}/>
-                } >
-            <PageSection variant={PageSectionVariants.light}>
+        <Page header={cabecalho} sidebar={barraNavegacao} >
+            <PageSection variant={PageSectionVariants.dark}>
                 {children}
             </PageSection>
         </Page>
