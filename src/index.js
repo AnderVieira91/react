@@ -4,6 +4,7 @@ import { AuthProvider } from "react-oidc-context";
 import { IntlProvider } from 'react-intl';
 
 import MainApp from "./pages/MainApp";
+import { LoadingProvider } from "./pages/contexts/LoadingContext";
 
 import mensagensIntl from "./mensagens/mensagensIntl";
 
@@ -59,7 +60,9 @@ const oidcConfig = {
 root.render(
     <IntlProvider locale={idioma} defaultLocale="pt-Br" messages={messages}>
         <AuthProvider {...oidcConfig} >
-            <MainApp/>
+            <LoadingProvider>
+                <MainApp/>
+            </LoadingProvider>
         </AuthProvider>
     </IntlProvider>
 );

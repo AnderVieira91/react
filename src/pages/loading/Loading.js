@@ -9,8 +9,10 @@ import { Spinner } from "@patternfly/react-core";
 const Loading = () => {
 
     return(
-        <div className="centralizado">
-            <Spinner isInline isSVG diameter="10%" aria-label="spinner-loading-page" />
+        <div className="loading">
+            <div className='wrapper'> 
+                <Spinner isInline isSVG diameter="20%" aria-label="spinner-loading-page" />
+            </div>
         </div>
     );
 

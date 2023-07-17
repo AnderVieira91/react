@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useAuth } from "react-oidc-context";
 import { Page, PageSection, PageSectionVariants } from "@patternfly/react-core";
 
 import Cabecalho from "./Cabecalho";
 import BarraNavegacao from "./BarraNavegacao";
+import Loading from "../../loading/Loading";
+import { LoadingContext } from "../../contexts/LoadingContext";
 
 /**
  * Componente responsável por renderizar uma página
@@ -19,6 +21,7 @@ import BarraNavegacao from "./BarraNavegacao";
 const Pagina = ({ nomePagina, children }) => {
 
     const [navegadorEstaAberto, setNavegadorEstaAberto] = useState(false);
+    const { loading } = useContext(LoadingContext);
 
     const autorizacao = useAuth();
 
@@ -37,11 +40,14 @@ const Pagina = ({ nomePagina, children }) => {
     );
 
     return(
+        <>
+        { loading && <Loading/>}
         <Page header={cabecalho} sidebar={barraNavegacao} >
             <PageSection variant={PageSectionVariants.dark}>
                 {children}
             </PageSection>
         </Page>
+        </>
     );
 
 };
