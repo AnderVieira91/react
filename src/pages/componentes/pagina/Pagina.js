@@ -7,6 +7,7 @@ import BarraNavegacao from "./BarraNavegacao";
 import Loading from "../../loading/Loading";
 import { LoadingContext } from "../../contexts/LoadingContext";
 
+
 /**
  * Componente responsável por renderizar uma página
  * padronizada pra o sistema.

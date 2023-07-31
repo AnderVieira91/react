@@ -10,6 +10,8 @@ import RotaPrivada from "./RotaPrivada";
 
 import gruposNavegacao from "./gruposNavegacao.json";
 
+import "@patternfly/react-core/dist/styles/base.css";
+
 /**
  * Componente principal do aplicativo.
  * Contêm todas as rotas do sisema.

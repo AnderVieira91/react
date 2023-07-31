@@ -1,5 +1,7 @@
+import ReactDOM from "react-dom";
+import "@patternfly/react-core/dist/styles/base.css";
+
 import React from "react";
-import ReactDOM from "react-dom/client";
 import { AuthProvider } from "react-oidc-context";
 import { IntlProvider } from 'react-intl';
 
@@ -16,8 +18,6 @@ import mensagensIntl from "./mensagens/mensagensIntl";
 
 const idioma = navigator.language;
 const messages = mensagensIntl[idioma] || mensagensIntl["pt-BR"];
-
-const root = ReactDOM.createRoot(document.getElementById("root"));
 
 /**
  * Responsável por após o login no Keycloak,
@@ -57,12 +57,12 @@ const oidcConfig = {
     onSigninCallback: onSigninCallback
 };
 
-root.render(
+const rootElement = document.getElementById("root");
+ReactDOM.render(
     <IntlProvider locale={idioma} defaultLocale="pt-Br" messages={messages}>
         <AuthProvider {...oidcConfig} >
             <LoadingProvider>
                 <MainApp/>
             </LoadingProvider>
         </AuthProvider>
-    </IntlProvider>
-);
+    </IntlProvider>, rootElement);
