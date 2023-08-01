@@ -11,7 +11,7 @@ const Loading = () => {
     return(
         <div className="loading">
             <div className='wrapper'> 
-                <Spinner isInline isSVG diameter="20%" aria-label="spinner-loading-page" />
+                <Spinner isInline diameter="20%" aria-label="spinner-loading-page" />
             </div>
         </div>
     );

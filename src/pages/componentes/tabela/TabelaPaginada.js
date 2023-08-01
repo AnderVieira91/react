@@ -47,7 +47,6 @@ const TabelaPaginada = ({ nomesColunas, linhas, ordemColunas, descricaoTabela, o
                     descricaoTabela={descricaoTabela}
                     onLinhaSelecionada={onLinhaSelecionada}/>
             <Pagination
-                    perPageComponent="div"
                     itemCount={totalItens}
                     perPage={qntPorPagAtual}
                     page={paginaAtual}

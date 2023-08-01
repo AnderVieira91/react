@@ -1,28 +1,33 @@
 {
     "grupos" : [
         {
-            "nome" : "inicio",
+            "label" : "inicio",
+            "icone" : "bandeira",
             "rotas" : [
                 {
                     "path" : "/",
                     "label" : "telaHome",
                     "role" : "admin",
-                    "componente": "HomePage"
+                    "componente" : "HomePage",
+                    "icone" : "casa"
                 },
                 {
                     "path" : "/loading",
                     "label" : "telaLoading",
-                    "componente": "LoadingPage"
+                    "componente" : "LoadingPage",
+                    "icone" : "espera"
                 }
             ]
         },
         {
-            "nome" : "naoAutorizado",
+            "label" : "naoAutorizado",
+            "icone" : "proibido",
             "rotas" : [
                 {
                     "path" : "/nao-autorizado",
                     "label" : "telaNaoAutorizado",
-                    "componente": "NaoAutorizadoPage"
+                    "componente" : "NaoAutorizadoPage",
+                    "icone" : "proibido"
                 }
             ]
         }

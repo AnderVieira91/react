@@ -1,7 +1,8 @@
 import React, { useContext } from "react";
 import { useAuth } from "react-oidc-context";
-import { PageHeader, PageHeaderTools, Button, Icon, FlexItem, Flex, Divider, Label } from "@patternfly/react-core";
-import { UserIcon } from "@patternfly/react-icons";
+import { Masthead, MastheadMain, MastheadToggle, PageToggleButton, MastheadContent, Button, Divider,
+        Toolbar, Flex, FlexItem, Icon, Text } from "@patternfly/react-core";
+import { UserIcon, BarsIcon } from "@patternfly/react-icons";
 
 import { MensagemContext } from "../../contexts/MensagemContext";
 /**
@@ -23,12 +24,15 @@ const Cabecalho = ({ nomePagina, navegadorEstaAberto, onToggleNavegador }) => {
     const autorizacao = useAuth();
 
     const headerTools = (
-        <PageHeaderTools>
-            <Flex>
+        <Toolbar className="background-azul">
+            <Flex justifyContent={{ default: "justifyContentFlexEnd" }}>
                 <FlexItem>
-                    <UserIcon />
-                    &nbsp; 
-                    {autorizacao?.user?.profile?.preferred_username}
+                    <Text component="p">
+                        <Icon isInline className="espacamento-icone">
+                            <UserIcon/>
+                        </Icon>
+                        {autorizacao?.user?.profile?.preferred_username}
+                    </Text>
                 </FlexItem>
 
                 <Divider
@@ -43,17 +47,28 @@ const Cabecalho = ({ nomePagina, navegadorEstaAberto, onToggleNavegador }) => {
                     </Button>
                 </FlexItem>
             </Flex>
-        </PageHeaderTools>
+        </Toolbar>
     );
 
     return (
-        <PageHeader
-                logo={nomePagina}
-                logoComponent="span"
-                showNavToggle
-                headerTools={headerTools}
-                isNavOpen={navegadorEstaAberto}
-                onNavToggle={onToggleNavegador}/>
+        <Masthead className="background-azul">
+            <MastheadToggle>
+                <PageToggleButton
+                        variant="plain"
+                        aria-label="Global navigation"
+                        isSidebarOpen={navegadorEstaAberto}
+                        onSidebarToggle={onToggleNavegador}
+                        id="vertical-nav-toggle">
+                    <BarsIcon />
+                </PageToggleButton>
+            </MastheadToggle>
+            <MastheadMain>
+                {nomePagina}
+            </MastheadMain>
+            <MastheadContent>
+                {headerTools}
+            </MastheadContent>
+        </Masthead>
     );
 
 }

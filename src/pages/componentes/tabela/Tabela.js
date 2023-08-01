@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { TableComposable, Caption, Thead, Tr, Th, Tbody, Td } from "@patternfly/react-table";
+import { Table, Caption, Thead, Tr, Th, Tbody, Td } from "@patternfly/react-table";
 import { Bullseye, EmptyState, EmptyStateVariant, EmptyStateIcon, Title, Icon, TitleSizes } from "@patternfly/react-core";
 
 import { CheckIcon, SearchIcon, TimesIcon } from "@patternfly/react-icons";
@@ -99,7 +99,7 @@ const Tabela = ({ nomesColunas, linhas, ordemColunas, descricaoTabela, onLinhaSe
 
     return (
 
-        <TableComposable aria-label="tabela-componse" variant="compact">
+        <Table aria-label="tabela-componse" variant="compact">
             {
                 isStringNaoVazia(descricaoTabela) &&
                 <Caption>
@@ -121,7 +121,7 @@ const Tabela = ({ nomesColunas, linhas, ordemColunas, descricaoTabela, onLinhaSe
             <Tbody>
                 {renderizarTableBody()}
             </Tbody>
-        </TableComposable>
+        </Table>
     );
 }
 

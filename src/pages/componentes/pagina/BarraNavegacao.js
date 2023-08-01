@@ -1,7 +1,8 @@
 import React, { useState, useContext } from "react";
 import { useAuth } from "react-oidc-context";
 import { useLocation } from 'react-router-dom';
-import { PageSidebar, Nav, NavItem, NavGroup, SearchInput } from "@patternfly/react-core";
+import { PageSidebar, PageSidebarBody, Nav, NavItem, NavGroup, SearchInput, Icon, Text } from "@patternfly/react-core";
+import { HomeIcon, TimesCircleIcon, FlagIcon, ClockIcon } from "@patternfly/react-icons";
 
 import { MensagemContext } from "../../contexts/MensagemContext";
 
@@ -19,6 +20,13 @@ import { obterRolesUsuario, usuarioPossuiRolePermitida } from "../../../utils/ut
  */
 const BarraNavegacao = ({ navegadorEstaAberto }) => {
 
+    const icones = {
+        bandeira: <FlagIcon/>,
+        casa: <HomeIcon/>,
+        espera: <ClockIcon/>,
+        proibido: <TimesCircleIcon/>
+    }
+
     const { mensagens } = useContext(MensagemContext);
 
     const [filtro, setFiltro] = useState("");
@@ -26,6 +34,40 @@ const BarraNavegacao = ({ navegadorEstaAberto }) => {
     const localizacao = useLocation();
     const autorizacao = useAuth();
     const rolesUsuario = obterRolesUsuario(autorizacao);
+
+    const gerartituloItem = (rota) => {
+        const icone = rota.icone ? icones[rota.icone] : undefined;
+
+        if (icone) {
+            return (
+                <a href={rota.path}>
+                    <Icon isInline className="espacamento-icone">
+                        {icone}
+                    </Icon>
+                    {mensagens[rota.label]}
+                </a>
+            );
+        }
+
+        return mensagens[rota.label];
+    }
+
+    const gerarTituloGrupo = (grupo) => {
+        const icone = grupo.icone ? icones[grupo.icone] : undefined;
+
+        if (icone) {
+            return (
+                <Text component="p">
+                    <Icon isInline className="espacamento-icone">
+                        {icone}
+                    </Icon>
+                    {mensagens[grupo.label]}
+                </Text>
+            );
+        }
+
+        return mensagens[grupo.label];
+    }
 
     const renderizarGruposNavegacao = () => {
         const grupos = [];
@@ -43,7 +85,7 @@ const BarraNavegacao = ({ navegadorEstaAberto }) => {
                                 preventDefault={localizacao.pathname === rota.path}
                                 to={rota.path}
                                 isActive={localizacao.pathname === rota.path}>
-                            {mensagens[rota.label]}
+                            {gerartituloItem(rota)}
                         </NavItem>
                     );
                 }
@@ -51,7 +93,7 @@ const BarraNavegacao = ({ navegadorEstaAberto }) => {
 
             if (rotas.length > 0) {
                 grupos.push(
-                    <NavGroup title={mensagens[grupo.nome]} key={`${indexGrupo}_${grupo.nome}`}>
+                    <NavGroup title={gerarTituloGrupo(grupo)} key={`${indexGrupo}_${grupo.nome}`}>
                         {rotas}
                     </NavGroup>
                 );
@@ -73,9 +115,9 @@ const BarraNavegacao = ({ navegadorEstaAberto }) => {
     );
 
     return (
-        <PageSidebar
-                nav={navegacao}
-                isNavOpen={navegadorEstaAberto} />
+        <PageSidebar className="background-azul" theme="light" isSidebarOpen={navegadorEstaAberto}>
+            <PageSidebarBody>{navegacao}</PageSidebarBody>
+        </PageSidebar>
     );
 
 }

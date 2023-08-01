@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, useCallback } from "react";
 import { useAuth } from "react-oidc-context";
 import { Page, PageSection, PageSectionVariants } from "@patternfly/react-core";
 
@@ -24,9 +24,27 @@ const Pagina = ({ nomePagina, children }) => {
     const [navegadorEstaAberto, setNavegadorEstaAberto] = useState(false);
     const { loading } = useContext(LoadingContext);
 
+    const atalhoAbrirNavegacao =  useCallback((event) => {
+        if (event.altKey && event.code === "KeyT") {
+            setNavegadorEstaAberto(true);
+        }
+
+        if (event.code === "Escape") {
+            setNavegadorEstaAberto(false);
+        }
+      }, []);
+
     const autorizacao = useAuth();
 
     useEffect(() => { autorizacao.signinSilent() }, []);
+
+    useEffect(() => {
+        document.addEventListener("keydown", atalhoAbrirNavegacao);
+    
+        return () => {
+          document.removeEventListener("keydown", atalhoAbrirNavegacao);
+        };
+      }, [atalhoAbrirNavegacao]);
 
     const toggleNavegador = () => {
         setNavegadorEstaAberto(!navegadorEstaAberto);
@@ -44,7 +62,7 @@ const Pagina = ({ nomePagina, children }) => {
         <>
         { loading && <Loading/>}
         <Page header={cabecalho} sidebar={barraNavegacao} >
-            <PageSection variant={PageSectionVariants.dark}>
+            <PageSection variant={PageSectionVariants.light}>
                 {children}
             </PageSection>
         </Page>

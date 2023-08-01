@@ -1,5 +1,4 @@
-import ReactDOM from "react-dom";
-import "@patternfly/react-core/dist/styles/base.css";
+import { createRoot } from 'react-dom/client';
 
 import React from "react";
 import { AuthProvider } from "react-oidc-context";
@@ -9,6 +8,8 @@ import MainApp from "./pages/MainApp";
 import { LoadingProvider } from "./pages/contexts/LoadingContext";
 
 import mensagensIntl from "./mensagens/mensagensIntl";
+
+import "@patternfly/react-core/dist/styles/base.css";
 
 /**
  * Arquivo responsável por "inicializar" o aplicativo.
@@ -57,12 +58,14 @@ const oidcConfig = {
     onSigninCallback: onSigninCallback
 };
 
-const rootElement = document.getElementById("root");
-ReactDOM.render(
+const rootNode = document.getElementById('root');
+const root = createRoot(rootNode);
+root.render(
     <IntlProvider locale={idioma} defaultLocale="pt-Br" messages={messages}>
         <AuthProvider {...oidcConfig} >
             <LoadingProvider>
                 <MainApp/>
             </LoadingProvider>
         </AuthProvider>
-    </IntlProvider>, rootElement);
+    </IntlProvider>
+);

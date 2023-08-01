@@ -79,7 +79,7 @@ const HomePage = () => {
                         qntPorPagAtual={10}/>
             </div>
 
-            <Button variant="primary" onClick={(_) => teste()}>Botão</Button>
+            <Button variant="primary" isLoading isDisabled onClick={(_) => teste()}>Botão</Button>
         </Pagina>
     );
 }

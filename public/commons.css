@@ -32,3 +32,11 @@
     justify-content: center;
     flex-direction: column;
 }
+
+.background-azul {
+    background-color: #539eed!important;
+}
+
+.espacamento-icone {
+    margin-right: 10px;
+}
