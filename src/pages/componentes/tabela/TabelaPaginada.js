@@ -35,9 +35,19 @@ import Tabela from "./Tabela";
  * @author andersonvieira
  */
 const TabelaPaginada = ({ nomesColunas, linhas, ordemColunas, descricaoTabela, onLinhaSelecionada,
-        onPaginaChange, totalItens, onQntPorPagChange, paginaAtual, qntPorPagAtual }) => {
+        onPaginaChange, totalItens, onQntPorPagChange, paginaAtual, qntPorPagAtual, isLoading }) => {
 
     const { mensagens } = useContext(MensagemContext);
+
+    const onChangePaginaAtual = (_event, novaPagina) => {
+        onPaginaChange(novaPagina);
+    };
+
+    const onChangeQntPorPaginaAtual = (_event, novaQntPorPagina, novaPagina) => {
+        onQntPorPagChange(novaQntPorPagina);
+        onPaginaChange(novaPagina);
+    };
+
     return (
         <div>
             <Tabela
@@ -45,15 +55,17 @@ const TabelaPaginada = ({ nomesColunas, linhas, ordemColunas, descricaoTabela, o
                     linhas={linhas}
                     ordemColunas={ordemColunas}
                     descricaoTabela={descricaoTabela}
-                    onLinhaSelecionada={onLinhaSelecionada}/>
+                    onLinhaSelecionada={onLinhaSelecionada}
+                    isLoading={isLoading}/>
             <Pagination
                     itemCount={totalItens}
                     perPage={qntPorPagAtual}
                     page={paginaAtual}
+                    isDisabled={isLoading}
                     variant={PaginationVariant.bottom}
                     titles={{ perPageSuffix: mensagens.itensPorPagina, ofWord: mensagens.de, items: mensagens.itens }}
-                    onSetPage={onPaginaChange}
-                    onPerPageSelect={onQntPorPagChange}/>
+                    onSetPage={onChangePaginaAtual}
+                    onPerPageSelect={onChangeQntPorPaginaAtual}/>
         </div>
     );
 

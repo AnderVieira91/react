@@ -40,3 +40,10 @@
 .espacamento-icone {
     margin-right: 10px;
 }
+
+.loading-tabela {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}

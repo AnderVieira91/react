@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { Table, Caption, Thead, Tr, Th, Tbody, Td } from "@patternfly/react-table";
-import { Bullseye, EmptyState, EmptyStateVariant, EmptyStateIcon, Title, Icon, TitleSizes } from "@patternfly/react-core";
+import { Bullseye, EmptyState, EmptyStateVariant, EmptyStateIcon, Title, Icon, TitleSizes, Spinner, Flex, FlexItem } from "@patternfly/react-core";
 
 import { CheckIcon, SearchIcon, TimesIcon } from "@patternfly/react-icons";
 
@@ -26,7 +26,7 @@ import { isStringNaoVazia } from "../../../utils/utils";
  *
  * @author andersonvieira 
  */
-const Tabela = ({ nomesColunas, linhas, ordemColunas, descricaoTabela, onLinhaSelecionada }) => {
+const Tabela = ({ nomesColunas, linhas, ordemColunas, descricaoTabela, onLinhaSelecionada, isLoading }) => {
 
     const { mensagens } = useContext(MensagemContext);
 
@@ -46,7 +46,7 @@ const Tabela = ({ nomesColunas, linhas, ordemColunas, descricaoTabela, onLinhaSe
     const renderizarLinhas = () => {
         const linhasTabela = [];
 
-        linhas.forEach((linha, linhaIndex) => {
+        linhas?.forEach((linha, linhaIndex) => {
             const colunasLinha = [];
 
             ordemColunas.forEach((coluna, colunaIndex) => {
@@ -75,6 +75,10 @@ const Tabela = ({ nomesColunas, linhas, ordemColunas, descricaoTabela, onLinhaSe
     }
 
     const renderizarTableBody = () => {
+        if (isLoading) {
+            return;
+        }
+
         const linhasTabela = renderizarLinhas();
 
         if (linhasTabela.length > 0) {
@@ -82,45 +86,76 @@ const Tabela = ({ nomesColunas, linhas, ordemColunas, descricaoTabela, onLinhaSe
         }
 
         return (
-            <Tr>
-                <Td colSpan={nomesColunas.length}>
-                    <Bullseye>
-                        <EmptyState variant={EmptyStateVariant.small}>
-                            <EmptyStateIcon icon={SearchIcon} />
-                            <Title headingLevel="h2" size="lg">
-                                {mensagens.tabelaVazia}
-                            </Title>
-                        </EmptyState>
-                    </Bullseye>
-                </Td>
-            </Tr>
+            <Tbody>
+                <Tr>
+                    <Td colSpan={nomesColunas.length}>
+                        <Bullseye>
+                            <EmptyState variant={EmptyStateVariant.small}>
+                                <EmptyStateIcon icon={SearchIcon} />
+                                <Title headingLevel="h2" size="lg">
+                                    {mensagens.tabelaVazia}
+                                </Title>
+                            </EmptyState>
+                        </Bullseye>
+                    </Td>
+                </Tr>
+            </Tbody>
         );
     }
 
-    return (
+    const renderizarTableHeader = () => {
+        if (isLoading) {
+            return;
+        }
 
-        <Table aria-label="tabela-componse" variant="compact">
-            {
-                isStringNaoVazia(descricaoTabela) &&
-                <Caption>
-                    <Title headingLevel="h1" size={TitleSizes['4xl']}>
-                        {descricaoTabela}
-                    </Title> 
-                </Caption>
-            }
+        return (
             <Thead>
                 <Tr style={estiloCabecalho}>
                     {
-                        nomesColunas.map((nomeColuna, index) => (
+                        nomesColunas?.map((nomeColuna, index) => (
                             <Th key={`coluna_${nomeColuna}_${index}`}>{nomeColuna}</Th>
                         ))
                     }
                 </Tr>
             </Thead>
+        );
+    }
 
-            <Tbody>
-                {renderizarTableBody()}
-            </Tbody>
+    const renderizarTableTitulo = () => {
+        if (isStringNaoVazia(descricaoTabela)) {
+            return (
+                <Caption>
+                    <Title headingLevel="h1" size={TitleSizes['4xl']}>
+                        {descricaoTabela}
+                    </Title> 
+                </Caption>
+            );
+        }
+    }
+
+    const renderizarLoadingTabela = () => {
+        if (isLoading) {
+            return (
+                <div className="loading-tabela">
+                    <Spinner diameter="10%"/>
+                </div>
+            );
+        }
+    }
+
+    const renderizarConteudoTabela = () => {
+        const conteudo = [];
+        conteudo.push(renderizarTableTitulo());
+        conteudo.push(renderizarLoadingTabela());
+        conteudo.push(renderizarTableHeader());
+        conteudo.push(renderizarTableBody());
+
+        return conteudo;
+    }
+
+    return (
+        <Table aria-label="tabela-componse" variant="compact">
+            { renderizarConteudoTabela() }
         </Table>
     );
 }
